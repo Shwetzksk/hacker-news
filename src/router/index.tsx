@@ -13,7 +13,7 @@ const router = createBrowserRouter(
     <>
       <Route errorElement={<ErrorBoundary />}>
         <Route path={routePaths.HOME} element={<Home />} />
-        <Route path={routePaths.POST} element={<Post />} />
+        <Route path={`${routePaths.POST}/:object_id`} element={<Post />} />
       </Route>
     </>
   )
