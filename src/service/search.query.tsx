@@ -6,7 +6,9 @@ async function fetchSearchedNews(query: string) {
   try {
     const res = await fetch(apis.hn_search(query));
     const data = await res.json();
-    return data.hits;
+    return data.hits
+      .toSorted((a, b) => b.created_at_i - a.created_at_i)
+      .filter((data) => data.title);
   } catch (err) {
     throw new Error(err);
   }
