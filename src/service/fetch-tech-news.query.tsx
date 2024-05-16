@@ -5,7 +5,7 @@ async function fetchTechNews(id: string) {
   try {
     const res = await fetch(apis.hn_news(id));
     const data = await res.json();
-    console.log(data);
+
     return data;
   } catch (err) {
     throw new Error(err);

@@ -2,11 +2,11 @@ import * as apis from "./api-enpoints";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchSearchedNews(query: string) {
+  if (!query) return [];
   try {
     const res = await fetch(apis.hn_search(query));
     const data = await res.json();
-    console.log(data);
-    return data;
+    return data.hits;
   } catch (err) {
     throw new Error(err);
   }
