@@ -8,7 +8,7 @@ interface News {
 async function fetchSearchedNews(query: string) {
   if (!query) return [];
   try {
-    const res = await fetch(apis.hn_search(query));
+    const res = await fetch(apis.hnSearch(query));
     const data: News = await res.json();
     return data.hits
       .toSorted((a: NewsItem, b: NewsItem) => b.created_at_i - a.created_at_i)

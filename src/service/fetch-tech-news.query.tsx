@@ -4,7 +4,7 @@ import { News } from "@/types/hacker-news";
 
 export async function fetchTechNews(id: string | undefined) {
   try {
-    const res = await fetch(apis.hn_news(id));
+    const res = await fetch(apis.hnNews(id));
     const data: News = await res.json();
 
     return data;
