@@ -1,18 +1,21 @@
 import * as apis from "./api-enpoints";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { News } from "@/types/hacker-news";
 
-async function fetchTechNews(id: string) {
+export async function fetchTechNews(id: string | undefined) {
   try {
     const res = await fetch(apis.hn_news(id));
-    const data = await res.json();
+    const data: News = await res.json();
 
     return data;
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err as string);
   }
 }
 
-export default function useFetchTechNews(id: string) {
+export default function useFetchTechNews(
+  id: string | undefined
+): UseQueryResult<News, Error> {
   const data = useQuery({
     queryKey: ["news", { id }],
     queryFn: () => fetchTechNews(id),

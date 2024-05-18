@@ -73,4 +73,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  a {
+    @apply text-fuchsia-500 hover:text-fuchsia-600;
+  }
 }

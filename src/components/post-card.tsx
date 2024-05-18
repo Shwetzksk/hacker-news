@@ -1,11 +1,14 @@
-import React from "react";
+import * as route_paths from "@/router/route-paths";
+import { NewsItem } from "@/types/hacker-news";
+import * as dateFormatter from "@/utils/date-formatter";
 import { FaRegComments } from "react-icons/fa";
 import { TiArrowSortedUp } from "react-icons/ti";
-import * as dateFormatter from "@/utils/date-formatter";
 import { Link } from "react-router-dom";
-import * as route_paths from "@/router/route-paths";
 
-const PostCard = ({ data }) => {
+interface Props {
+  data: NewsItem;
+}
+const PostCard = ({ data }: Props): JSX.Element => {
   return (
     <Link to={`${route_paths.POST}/${data.objectID}`}>
       <div className="w-full px-2 py-1.5 border-b-2 border-zinc-100  cursor-pointer hover:bg-fuchsia-100/45">

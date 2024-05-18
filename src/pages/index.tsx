@@ -2,9 +2,10 @@ import PostCard from "@/components/post-card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import useSearchNews from "@/service/search.query";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IoFileTrayOutline } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
+import { NewsItem } from "@/types/hacker-news";
 
 function Home() {
   const location = useLocation();
@@ -16,28 +17,34 @@ function Home() {
   }, [location]);
   const searchedNews = useSearchNews(search);
 
-  function handleQuery(e) {
-    const { value } = e.target;
+  function handleQuery(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
     setInputQuery(value);
+    if (!value) return navigate(`${location.pathname}`);
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const search = inputQuery ? `?query=${inputQuery}` : "";
-      navigate(`${location.pathname}${search}`);
-    }, 1000);
+    if (search) {
+      setInputQuery(search);
+    }
+  }, []);
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
 
-    return () => {
-      clearTimeout(timer);
-    };
+    if (inputQuery) {
+      timer = setTimeout(() => {
+        const searchVal = `?query=${inputQuery}`;
+        navigate(`${location.pathname}${searchVal}`);
+      }, 1000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   }, [inputQuery]);
 
   return (
-    <section className="bg-slate-100 h-screen flex flex-col items-center justify-center">
-      <nav className="w-full bg-fuchsia-950 text-white px-3 py-1.5">
-        <h2>HackerNews</h2>
-      </nav>
-      <section className="flex flex-col items-center  max-w-[700px] w-4/6 mx-auto bg-white rounded-md shadow-lg m-auto">
+    <section className="bg-slate-100 h-screen flex flex-col items-center ">
+      <section className="flex flex-col w-5/6 max-w-11/12 lg:w-4/6  lg:max-w-[700px]  mx-auto bg-white  relative mt-8">
         <Input
           value={inputQuery}
           onChange={handleQuery}
@@ -45,7 +52,7 @@ function Home() {
         />
 
         {Boolean(search) && (
-          <main className="w-full h-[calc(100vh-100px)] hover:overflow-y-auto overflow-y-hidden rounded-b-md">
+          <main className="w-full max-h-[calc(100vh-150px)] hover:overflow-y-auto overflow-y-hidden rounded-b-md absolute bg-white rounded-md shadow-lg top-10">
             {Boolean(searchedNews.isFetched && !searchedNews?.data?.length) && (
               <div className="flex flex-col justify-center items-center p-4 m-auto h-full ">
                 <IoFileTrayOutline size={50} className="text-zinc-300" />
@@ -53,17 +60,17 @@ function Home() {
               </div>
             )}
             {!searchedNews.isFetching &&
-              searchedNews?.data?.map((news) => (
+              searchedNews?.data?.map((news: NewsItem) => (
                 <PostCard key={news.objectID} data={news} />
               ))}
 
             {searchedNews.isFetching && (
-              <>
+              <div className="py-5">
                 <Skeleton className="w-11/12 mx-auto rounded-md h-6 my-3" />
                 <p className="text-sm text-slate-500 text-center">
                   Loading news...
                 </p>
-              </>
+              </div>
             )}
           </main>
         )}
