@@ -42,6 +42,9 @@ function Home() {
     }
   }, [inputQuery]);
 
+  if (searchedNews.isError)
+    throw { status: 404, message: `Cannot find news for this query:${search}` };
+
   return (
     <section className="bg-slate-100 h-screen flex flex-col items-center ">
       <section className="flex flex-col w-5/6 max-w-11/12 lg:w-4/6  lg:max-w-[700px]  mx-auto bg-white  relative mt-8">

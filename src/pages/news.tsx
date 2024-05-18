@@ -11,8 +11,8 @@ function Post(): JSX.Element {
   const params = useParams<NewsParams>();
   const techNews = useFetchTechNews(params.object_id);
 
-  console.log(techNews);
-
+  if (techNews.isError)
+    throw { status: 404, message: `Cannot find news for this id` };
   return (
     <section className="bg-slate-100 min-h-screen py-3">
       {Boolean(techNews.isFetching) && (
