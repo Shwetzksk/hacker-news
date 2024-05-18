@@ -21,9 +21,9 @@ function Post(): JSX.Element {
         </div>
       )}
       {Boolean(!techNews.isFetching) && (
-        <main className="w-11/12 mx-auto bg-white shadow-md rounded-md p-3 ">
+        <main className="w-11/12 mx-auto bg-white shadow-md rounded-md p-5 ">
           <h1 className="text-lg font-semibold">{techNews?.data?.title}</h1>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col mt-1 gap-0 md:flex-row md:items-center md:gap-3">
             {[
               `Author: ${techNews?.data?.author}`,
               `Created at: ${dateFormatter.formatMonthYear(
@@ -36,13 +36,15 @@ function Post(): JSX.Element {
               </p>
             ))}
           </div>
-          <div className="w-full py-5 px-3">
+          <div className="w-full py-5 ">
             <h3 className="text-lg font-semibold text-fuchsia-800">
               Members Discussion
             </h3>
-            {techNews.data?.children?.map((comment: NewsComment) => (
-              <Comment key={comment.id} data={comment} />
-            ))}
+            <section className="px-3">
+              {techNews.data?.children?.map((comment: NewsComment) => (
+                <Comment key={comment.id} data={comment} />
+              ))}
+            </section>
           </div>
         </main>
       )}
