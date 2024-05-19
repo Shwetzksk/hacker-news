@@ -27,7 +27,7 @@ function News(): JSX.Element {
         </div>
       )}
       {Boolean(!techNews.isFetching) && (
-        <main className="w-11/12 mx-auto bg-white shadow-md rounded-md p-5 ">
+        <main className="w-11/12 mx-auto bg-white shadow-md rounded-md p-3 md:p-5 ">
           <h1 className="text-lg font-semibold">{techNews?.data?.title}</h1>
           <div className="flex flex-col mt-1 gap-0 md:flex-row md:items-center md:gap-3">
             {[
@@ -47,7 +47,7 @@ function News(): JSX.Element {
               <h3 className="text-lg font-semibold text-fuchsia-800">
                 Members Discussion
               </h3>
-              <section className="px-3">
+              <section className="px-1 md:px-3">
                 {techNews.data?.children
                   ?.slice(0, limit)
                   ?.map((comment: NewsComment) => (
