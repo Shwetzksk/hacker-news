@@ -13,9 +13,11 @@ export default function TimeStamp({ time }: Time) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>{dateFormatter.humanizeDate(time)}</TooltipTrigger>
+        <TooltipTrigger>
+          <p>{dateFormatter.humanizeDate(time)}</p>
+        </TooltipTrigger>
         <TooltipContent>
-          {dateFormatter.formatDayMonthYear(time)}
+          {dateFormatter.formatDayMonthYearTime(time)}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
